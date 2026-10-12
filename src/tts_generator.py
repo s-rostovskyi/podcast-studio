@@ -2,6 +2,7 @@
 from pathlib import Path
 import subprocess
 import tempfile
+import os
 from uuid import uuid4
 
 MAX_TTS_CHARS = 3000  # Deliberately below the API maximum of 4096 characters.
@@ -31,17 +32,26 @@ def split_for_tts(text: str, max_chars: int = MAX_TTS_CHARS) -> list[str]:
         result.append(" ".join(current))
     return result
 
-
 def _speak_segment(client, segment: str, voice: str, path: Path) -> None:
+    model = os.getenv("OPENAI_TTS_MODEL", "tts-1")
+
+    params = {
+        "model": model,
+        "voice": voice,
+        "input": segment,
+        "response_format": "mp3",
+    }
+
+    # Voice instructions are supported only by GPT-based TTS models.
+    if model.startswith("gpt-4o-mini-tts"):
+        params["instructions"] = (
+            "Speak clearly and naturally as a warm educational podcast host."
+        )
+
     with client.audio.speech.with_streaming_response.create(
-        model="gpt-4o-mini-tts",
-        voice=voice,
-        input=segment,
-        instructions="Speak clearly and naturally as a warm educational podcast host.",
-        response_format="mp3",
+        **params
     ) as response:
         response.stream_to_file(path)
-
 
 def generate_audio(script: str, voice: str = "coral", output_dir: str | Path = DEFAULT_OUTPUT_DIR, client=None) -> str:
     """Return a unique MP3 path. FFmpeg joins segments when necessary."""
