@@ -112,6 +112,44 @@ python -m pytest -q
 Tests fake the API calls and **do not generate real speech**. Run a real end-to-end test
 with a valid API key (upload the sample and download/play the MP3) before submission.
 
+## How to Use
+
+1. Open the Podcast Studio web application.
+2. Upload a PDF, TXT or MD document, paste lesson notes, or provide both.
+3. Select the desired podcast duration (3 or 5 minutes).
+4. Choose an AI voice: coral, alloy or onyx.
+5. Click "Generate podcast".
+6. Review the generated podcast script.
+7. Listen to the audio using the integrated player.
+8. Download the generated MP3 file.
+
+The application can summarize different educational topics without changing the Python code. All generated narration is AI-produced.
+
+## Project Results
+
+The application was successfully tested on Windows and macOS.
+
+**Validation**
+- 10 automated tests passed using pytest.
+- Real OpenAI LLM integration was verified.
+- Real text-to-speech generation was verified.
+- The Gradio interface was tested locally.
+- Generated MP3 files were successfully played and downloaded.
+
+**Challenges Solved**
+- Resolved an OpenAI model access error by
+  switching to the supported tts-1 model.
+- Configured secure environment variables
+  for different development environments.
+- Integrated independently developed modules
+  using GitHub branches and Pull Requests.
+
+**Future Improvements**
+- Exam Preparation Mode with review questions.
+- More customizable podcast formats.
+- Improved progress feedback during generation.
+- Permanent cloud deployment and access control.`
+
 ## Known limitations
 
 - PDF text extraction works for selectable-text documents only; scanned PDF needs OCR.
