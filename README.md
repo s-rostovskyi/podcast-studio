@@ -27,7 +27,7 @@ Script + audio playback + downloaded .mp3
 Install Python 3.11, Git, and VS Code first.
 
 ```powershell
-git clone https://github.com/YOUR_USERNAME/podcast-studio.git
+git clone https://github.com/s-rostovskyi/podcast-studio.git
 cd podcast-studio
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
@@ -38,6 +38,43 @@ notepad .env
 python -m pytest -q
 python app.py
 ```
+
+## Local setup (macOS)
+
+Install Python 3.11 and Git first.
+
+```bash
+git clone https://github.com/s-rostovskyi/podcast-studio.git
+cd podcast-studio
+
+python3.11 -m venv .venv
+source .venv/bin/activate
+
+python -m pip install --upgrade pip
+python -m pip install -r requirements-dev.txt
+
+cp .env.example .env
+```
+
+Open `.env` in VS Code and configure your own
+OpenAI API key and model settings.
+
+Run the tests:
+
+```bash
+python -m pytest -q
+```
+
+Start Podcast Studio:
+
+```bash
+python app.py
+```
+
+Open http://127.0.0.1:7860 in your browser.
+
+To stop the application, press Control+C
+in the terminal.
 
 Replace `sk-your-own-api-key-here` with your OpenAI API key (from https://platform.openai.com/api-keys).
 Never commit `.env`. Open `http://127.0.0.1:7860` and use `examples/lesson_notes.txt`.
