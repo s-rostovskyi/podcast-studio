@@ -1,0 +1,5 @@
+gradio>=5.0,<7.0
+openai>=2.0,<3.0
+pypdf>=5.0,<7.0
+python-dotenv>=1.0,<2.0
+imageio-ffmpeg>=0.5,<1.0
