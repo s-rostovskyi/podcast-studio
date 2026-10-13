@@ -2,8 +2,7 @@ Introduction to Generative AI
 
 Artificial intelligence is a broad field in which computers perform tasks that normally need human intelligence.
 Machine learning is a subset of AI: a model learns patterns from data rather than following only hand-written rules.
-Deep learning is a type of machine learning based on layered neural networks.
-Generative AI produces new content, such as text, images or audio, based on patterns learned during training.
+Deep learning is a type of machine learning based on layered neural networks. Generative AI produces new content, such as text, images or audio, based on patterns learned during training.
 A large language model (LLM) generates text by predicting likely next tokens. Its outputs can be useful but are not guaranteed to be factually correct.
 Good prompts clarify the task, context, audience, format and constraints. A system prompt guides the model's behavior, while user input provides the material to process.
 An AI agent combines a model with tools, instructions and execution logic to work toward a goal. Human review matters, especially when tools can make external changes.
