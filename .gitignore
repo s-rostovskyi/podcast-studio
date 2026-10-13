@@ -9,3 +9,4 @@ outputs/*
 !outputs/README.md
 *.log
 .DS_Store
+.vscode
