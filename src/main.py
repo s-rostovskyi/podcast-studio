@@ -12,13 +12,13 @@ from src.tts_generator import generate_audio
 load_dotenv(Path(__file__).resolve().parents[1] / ".env")
 logger = logging.getLogger(__name__)
 
-def make_recap(file_path, notes, duration, voice):
+def make_recap(file_path, notes, duration, voice, mode="recap"):
     """Full input -> script -> MP3 pipeline invoked by the Gradio button."""
     try:
         text = prepare_input(notes, file_path)
         if not os.getenv("OPENAI_API_KEY"):
             raise ValueError("OPENAI_API_KEY is not configured on the server.")
-        script = create_script(text, duration_minutes=int(duration))
+        script = create_script(text, duration_minutes=int(duration), mode=mode,)
         mp3_path = generate_audio(script, voice=voice)
         return script, mp3_path, mp3_path
     except ValueError as exc:
@@ -36,6 +36,15 @@ with gr.Blocks(title="Podcast Studio - Lesson Recapper") as demo:
     with gr.Row():
         duration = gr.Dropdown([3, 5], value=5, label="Target duration (minutes)")
         voice = gr.Dropdown(["coral", "alloy", "onyx"], value="coral", label="AI voice")
+    
+    mode = gr.Radio(
+    choices=[
+        ("Lesson Recap", "recap"),
+        ("Exam Preparation", "exam"),
+    ],
+    value="recap",
+    label="Learning mode",)
+
     generate_button = gr.Button("Generate podcast", variant="primary")
     script = gr.Textbox(label="Podcast script (transcript)", lines=12)
     audio = gr.Audio(label="Listen to the MP3", interactive=False)
@@ -43,7 +52,7 @@ with gr.Blocks(title="Podcast Studio - Lesson Recapper") as demo:
     gr.Markdown("*Large transcripts can require several API calls. This demo uses your configured OpenAI API billing account.*")
     generate_button.click(
         fn=make_recap,
-        inputs=[source_file, notes, duration, voice],
+        inputs=[source_file, notes, duration, voice, mode],
         outputs=[script, audio, download],
         concurrency_limit=1,
     )
